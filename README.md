@@ -1,2 +1,3 @@
-# yew-axum-tauri-desktop
-Yew + Axum + Tauri full stack Rust development for desktop apps.
+# rust-yew-axum-tauri-desktop template
+
+Rust + Yew + Axum + Tauri, full-stack Rust development for Desktop apps.
