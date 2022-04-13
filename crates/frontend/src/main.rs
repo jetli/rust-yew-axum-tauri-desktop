@@ -20,15 +20,44 @@ fn app() -> Html {
         })
     };
 
+    let state_server = use_async(async move {
+        let response = reqwest::get("http://localhost:3001/").await;
+        match response {
+            Ok(data) => match data.text().await {
+                Ok(body) => Ok(body),
+                Err(_) => Err("Body Error".to_string()),
+            },
+            Err(_) => Err("Request Error".to_string()),
+        }
+    });
+    let onclickserver = {
+        let state_server = state_server.clone();
+        Callback::from(move |_| {
+            state_server.run();
+        })
+    };
+
     html! {
         <>
             { "Hello, world" }
             <button {onclick}>{ "Load backend api" }</button>
+            <button onclick={onclickserver}>{ "Load server api" }</button>
             {
                 if let Some(response) = &state.data {
                     html! {
                         <>
                             <p>{ "From backend: " }<b>{ response }</b></p>
+                        </>
+                        }
+                } else {
+                    html! {}
+                }
+            }
+            {
+                if let Some(response) = &state_server.data {
+                    html! {
+                        <>
+                            <p>{ "From server: " }<b>{ response }</b></p>
                         </>
                         }
                 } else {

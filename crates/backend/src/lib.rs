@@ -19,5 +19,5 @@ pub async fn app() {
 }
 
 async fn handler() -> impl IntoResponse {
-    "Hello, world!"
+    "Hello, from backend!"
 }
