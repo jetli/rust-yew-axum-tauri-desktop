@@ -4,15 +4,14 @@
 )]
 
 use backend::app;
-use once_cell::sync::OnceCell;
 
-static PORT: OnceCell<u16> = OnceCell::new();
+struct Port(u16);
 
 fn main() {
     let port = portpicker::pick_unused_port().expect("failed to find unused port");
-    PORT.set(port).unwrap();
     tauri::async_runtime::spawn(app(port));
     tauri::Builder::default()
+        .manage(Port(port))
         .invoke_handler(tauri::generate_handler![get_port])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -20,12 +19,6 @@ fn main() {
 
 /// A command to get the usused port, instead of 3000.
 #[tauri::command]
-fn get_port() -> Result<String, String> {
-    if let Some(port) = PORT.get() {
-        println!("{}", port);
-        Ok(format!("{}", port))
-    } else {
-        println!("failed to get port");
-        Err("failed to get port".to_string())
-    }
+fn get_port(port: tauri::State<Port>) -> Result<String, String> {
+    Ok(format!("{}", port.0))
 }
