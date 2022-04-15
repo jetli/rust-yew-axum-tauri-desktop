@@ -7,7 +7,8 @@
     "distDir": "../frontend/dist",
     "devPath": "http://localhost:8080",
     "beforeDevCommand": "cd frontend && trunk serve",
-    "beforeBuildCommand": "cd frontend && trunk build"
+    "beforeBuildCommand": "cd frontend && trunk build",
+    "withGlobalTauri": true
   },
   "tauri": {
     "bundle": {
