@@ -5,8 +5,7 @@ use axum::{
     http::Method,
     response::IntoResponse,
     routing::get,
-    Router,
-    Json,
+    Json, Router,
 };
 use tower_http::cors::{Any, CorsLayer};
 
