@@ -6,12 +6,16 @@ use axum::{
     response::IntoResponse,
     routing::get,
     Router,
+    Json,
 };
 use tower_http::cors::{Any, CorsLayer};
+
+use types::UserInfo;
 
 pub async fn app(port: u16) {
     let app = Router::new()
         .route("/ws", get(ws_handler))
+        .route("/user", get(user_handler))
         .route("/", get(handler))
         .layer(CorsLayer::new().allow_origin(Any).allow_methods(vec![
             Method::GET,
@@ -31,6 +35,15 @@ pub async fn app(port: u16) {
 
 async fn handler() -> impl IntoResponse {
     "Hello, from backend!"
+}
+
+async fn user_handler() -> impl IntoResponse {
+    let user = UserInfo {
+        id: 1,
+        name: "Backend user".to_owned(),
+    };
+
+    Json(user)
 }
 
 async fn ws_handler(ws: WebSocketUpgrade) -> impl IntoResponse {

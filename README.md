@@ -1,13 +1,15 @@
 # rust-yew-axum-tauri-desktop template
 
-Rust + Yew + Axum + Tauri, full-stack Rust development for Desktop apps.
+Rust + Yew + Axum + Tauri, full-stack Rust development for Desktop apps, supports restful and
+websocket api.
 
 ## Crates
 
-- `frontend`: Yew frontend app for desktop client
-- `backend`: Axum backend api for desktop client
-- `tauri`: Tauri app for desktop client
-- `server`: Axum server side api
+- `frontend`: Yew frontend app for desktop client.
+- `backend`: Axum backend restful and websocket api for desktop client.
+- `server`: Axum server side restful and websocket api.
+- `types`: Common types shared by frontend/backend/server.
+- `tauri`: Tauri app for desktop client.
 
 ## Development
 

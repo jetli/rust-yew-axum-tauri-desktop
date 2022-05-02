@@ -5,6 +5,8 @@ use yew_hooks::{
     UseWebSocketOptions, UseWebSocketReadyState,
 };
 
+use types::UserInfo;
+
 // Use `wee_alloc` as the global allocator.
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -28,10 +30,10 @@ fn app() -> Html {
         use_async(async move {
             match &port.data {
                 Some(port) => {
-                    let response = reqwest::get(format!("http://localhost:{}/", port)).await;
+                    let response = reqwest::get(format!("http://localhost:{}/user", port)).await;
                     match response {
-                        Ok(data) => match data.text().await {
-                            Ok(body) => Ok(body),
+                        Ok(data) => match data.json::<UserInfo>().await {
+                            Ok(user) => Ok(user),
                             Err(_) => Err("Backend body Error".to_owned()),
                         },
                         Err(_) => Err("Backend request Error".to_owned()),
@@ -51,10 +53,10 @@ fn app() -> Html {
 
     // Fetch data from server.
     let state_server = use_async(async move {
-        let response = reqwest::get("http://localhost:3001/").await;
+        let response = reqwest::get("http://localhost:3001/user").await;
         match response {
-            Ok(data) => match data.text().await {
-                Ok(body) => Ok(body),
+            Ok(data) => match data.json::<UserInfo>().await {
+                Ok(user) => Ok(user),
                 Err(_) => Err("Body Error".to_string()),
             },
             Err(_) => Err("Request Error".to_string()),
@@ -111,7 +113,7 @@ fn app() -> Html {
             {
                 if let Some(response) = &state.data {
                     html! {
-                        <p>{ "From backend: " }<b>{ response }</b></p>
+                        <p>{ "From backend: " }<b>{ &response.name }</b></p>
                     }
                 } else {
                     html! {}
@@ -120,7 +122,7 @@ fn app() -> Html {
             {
                 if let Some(response) = &state_server.data {
                     html! {
-                        <p>{ "From server: " }<b>{ response }</b></p>
+                        <p>{ "From server: " }<b>{ &response.name }</b></p>
                     }
                 } else {
                     html! {}
