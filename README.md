@@ -17,7 +17,7 @@ Install
 
 ```bash
 cargo install trunk
-cargo install tauri-cli --version ^1.0.0-rc
+cargo install tauri-cli
 ```
 
 Run desktop client side
