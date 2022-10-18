@@ -6,15 +6,15 @@
   "build": {
     "distDir": "../frontend/dist",
     "devPath": "http://localhost:8080",
-    "beforeDevCommand": "cd frontend && trunk clean && trunk serve",
-    "beforeBuildCommand": "cd frontend && trunk clean && trunk build",
+    "beforeDevCommand": "cd frontend && trunk serve",
+    "beforeBuildCommand": "cd frontend && trunk build",
     "withGlobalTauri": true
   },
   "tauri": {
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tauri.dev.desktop",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -29,13 +29,10 @@
       "shortDescription": "",
       "longDescription": "",
       "deb": {
-        "depends": [],
-        "useBootstrapper": false
+        "depends": []
       },
       "macOS": {
         "frameworks": [],
-        "minimumSystemVersion": "",
-        "useBootstrapper": false,
         "exceptionDomain": "",
         "signingIdentity": null,
         "providerShortName": null,
@@ -63,7 +60,7 @@
       }
     ],
     "security": {
-      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+      "csp": null
     }
   }
 }
