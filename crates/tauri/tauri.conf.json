@@ -33,7 +33,7 @@
       },
       "macOS": {
         "frameworks": [],
-        "exceptionDomain": "",
+        "exceptionDomain": "localhost",
         "signingIdentity": null,
         "providerShortName": null,
         "entitlements": null
