@@ -4,10 +4,6 @@ use yew_hooks::prelude::*;
 
 use types::UserInfo;
 
-// Use `wee_alloc` as the global allocator.
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 #[function_component(App)]
 fn app() -> Html {
     // Get backend port automatically from tauri command.
@@ -73,7 +69,7 @@ fn app() -> Html {
     let ws = {
         let history = history.clone();
         let port = port.data.clone().unwrap_or_default();
-        use_web_socket_with_options(
+        use_websocket_with_options(
             format!("ws://localhost:{}/ws", port),
             UseWebSocketOptions {
                 // Receive message by callback `onmessage`.
@@ -149,5 +145,5 @@ extern "C" {
 
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
-    yew::start_app::<App>();
+    yew::Renderer::<App>::new().render();
 }
