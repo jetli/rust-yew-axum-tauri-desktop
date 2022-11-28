@@ -1,3 +1,4 @@
+use tauri_sys::tauri::invoke;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
@@ -9,8 +10,8 @@ fn app() -> Html {
     // Get backend port automatically from tauri command.
     let port = use_async_with_options(
         async move {
-            match get_port().await {
-                Ok(p) => Ok(p.as_string().unwrap()),
+            match invoke::<_, String>("get_port").await {
+                Ok(p) => Ok(p),
                 Err(e) => Err(format!("Error: {:?}", e)),
             }
         },
@@ -134,13 +135,6 @@ fn app() -> Html {
             }
         </>
     }
-}
-
-#[wasm_bindgen(module = "/public/tauri.js")]
-extern "C" {
-    /// Get backend port from tauri commands.
-    #[wasm_bindgen(js_name = getPort, catch)]
-    pub async fn get_port() -> Result<JsValue, JsValue>;
 }
 
 fn main() {
