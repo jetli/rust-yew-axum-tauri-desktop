@@ -16,11 +16,12 @@ websocket api.
 Install
 
 ```bash
+rustup target add wasm32-unknown-unknown
 cargo install trunk
 cargo install tauri-cli
 ```
 
-Run desktop client side
+Run desktop client app
 
 ```bash
 cargo tauri dev
@@ -30,6 +31,12 @@ Run server side
 
 ```bash
 cargo run --bin server
+```
+
+Bundle desktop client app
+
+```bash
+cargo tauri build
 ```
 
 ## Contribute
