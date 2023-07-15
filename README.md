@@ -1,6 +1,6 @@
 # rust-yew-axum-tauri-desktop template
 
-Rust + Yew + Axum + Tauri, full-stack Rust development for Desktop apps, supports restful and
+Rust + Yew + Axum + Tauri + Tailwindcss, full-stack Rust development for Desktop apps, supports restful and
 websocket api.
 
 ## Crates
