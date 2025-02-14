@@ -24,7 +24,7 @@ async fn main() {
         );
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3001));
-    println!("listening on {}", addr);
+    println!("Server is listening on {}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
