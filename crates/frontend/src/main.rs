@@ -38,6 +38,7 @@ fn app() -> Html {
     };
 
     let on_load_backend_api: Callback<MouseEvent> = {
+        log::trace!("on_load_backend_api()");
         let state = state.clone();
         Callback::from(move |_| {
             state.run();
@@ -57,6 +58,7 @@ fn app() -> Html {
     });
 
     let on_load_server_api: Callback<MouseEvent> = {
+        log::trace!("on_load_server_api()");
         let state_server = state_server.clone();
         Callback::from(move |_| {
             state_server.run();
@@ -83,6 +85,7 @@ fn app() -> Html {
     };
 
     let on_send_to_backend_websocket: Callback<MouseEvent> = {
+        log::trace!("on_send_to_backend_websocket()");
         let ws = ws.clone();
         let history = history.clone();
         Callback::from(move |_| {
@@ -93,6 +96,7 @@ fn app() -> Html {
     };
 
     let on_connect_to_backend_websocket: Callback<MouseEvent> = {
+        log::trace!("on_connect_to_backend_websocket()");
         let ws = ws.clone();
         Callback::from(move |_| {
             ws.open();
