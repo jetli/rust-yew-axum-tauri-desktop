@@ -1,4 +1,4 @@
-use tauri_sys::tauri::invoke;
+use tauri_sys::core::invoke_result;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 
@@ -9,9 +9,9 @@ fn app() -> Html {
     // Get backend port automatically from tauri command.
     let port = use_async_with_options(
         async move {
-            match invoke::<_, String>("get_port", &()).await {
                 Ok(p) => Ok(p),
                 Err(e) => Err(format!("Error: {:?}", e)),
+            match invoke_result::<String, String>("get_port", &()).await {
             }
         },
         UseAsyncOptions::enable_auto(),
