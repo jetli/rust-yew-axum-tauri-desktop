@@ -37,7 +37,7 @@ fn app() -> Html {
         })
     };
 
-    let onclick = {
+    let on_load_backend_api = {
         let state = state.clone();
         Callback::from(move |_| {
             state.run();
@@ -56,7 +56,7 @@ fn app() -> Html {
         }
     });
 
-    let onclickserver = {
+    let on_load_server_api = {
         let state_server = state_server.clone();
         Callback::from(move |_| {
             state_server.run();
@@ -81,7 +81,7 @@ fn app() -> Html {
             },
         )
     };
-    let onclick2 = {
+    let on_send_to_backend_websocket = {
         let ws = ws.clone();
         let history = history.clone();
         Callback::from(move |_| {
@@ -90,7 +90,7 @@ fn app() -> Html {
             history.push(format!("ws [send]: {}", message));
         })
     };
-    let onopen = {
+    let on_connect_to_backend_websocket = {
         let ws = ws.clone();
         Callback::from(move |_| {
             ws.open();
@@ -100,8 +100,8 @@ fn app() -> Html {
     html! {
         <>
             <p class="space-x-4 m-4">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" {onclick}>{ "Load backend api" }</button>
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={onclickserver}>{ "Load server api" }</button>
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={on_load_backend_api}>{ "Load backend api" }</button>
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={on_load_server_api}>{ "Load server api" }</button>
             </p>
             {
                 if let Some(response) = &state.data {
@@ -122,8 +122,8 @@ fn app() -> Html {
                 }
             }
             <p class="space-x-4 m-4">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={onopen} disabled={*ws.ready_state != UseWebSocketReadyState::Closed}>{ "Connect to backend websocket" }</button>
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={onclick2} disabled={*ws.ready_state != UseWebSocketReadyState::Open}>{ "Send to backend websocket" }</button>
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={on_connect_to_backend_websocket} disabled={*ws.ready_state != UseWebSocketReadyState::Closed}>{ "Connect to backend websocket" }</button>
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-slate-900 text-slate-100 hover:bg-slate-900/90" onclick={on_send_to_backend_websocket} disabled={*ws.ready_state != UseWebSocketReadyState::Open}>{ "Send to backend websocket" }</button>
             </p>
             {
                 for history.current().iter().map(|message| {
