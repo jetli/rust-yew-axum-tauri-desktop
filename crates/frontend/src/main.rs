@@ -37,7 +37,7 @@ fn app() -> Html {
         })
     };
 
-    let on_load_backend_api = {
+    let on_load_backend_api: Callback<MouseEvent> = {
         let state = state.clone();
         Callback::from(move |_| {
             state.run();
@@ -56,7 +56,7 @@ fn app() -> Html {
         }
     });
 
-    let on_load_server_api = {
+    let on_load_server_api: Callback<MouseEvent> = {
         let state_server = state_server.clone();
         Callback::from(move |_| {
             state_server.run();
@@ -81,7 +81,8 @@ fn app() -> Html {
             },
         )
     };
-    let on_send_to_backend_websocket = {
+
+    let on_send_to_backend_websocket: Callback<MouseEvent> = {
         let ws = ws.clone();
         let history = history.clone();
         Callback::from(move |_| {
@@ -90,7 +91,8 @@ fn app() -> Html {
             history.push(format!("ws [send]: {}", message));
         })
     };
-    let on_connect_to_backend_websocket = {
+
+    let on_connect_to_backend_websocket: Callback<MouseEvent> = {
         let ws = ws.clone();
         Callback::from(move |_| {
             ws.open();
