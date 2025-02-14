@@ -31,7 +31,7 @@ tauri-plugin-process = "2"
 
 [lib]
 name = "app_lib"
-crate-type = ["staticlib", "cdylib", "rlib", "lib"]
+crate-type = ["staticlib", "cdylib", "lib"]
 
 [features]
 # by default Tauri runs in production mode
