@@ -9,10 +9,10 @@ fn app() -> Html {
     // Get backend port automatically from tauri command.
     let port = use_async_with_options(
         async move {
-                Ok(p) => Ok(p),
-                Err(e) => Err(format!("Error: {:?}", e)),
-            match invoke_result::<String, String>("get_port", &()).await {
-            }
+            invoke_result::<String, String>("get_port", &())
+                .await
+                .inspect(|port| log::info!("Port: {port}"))
+                .inspect_err(|error| log::error!("Error: {error}"))
         },
         UseAsyncOptions::enable_auto(),
     );
